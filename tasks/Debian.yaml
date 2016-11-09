@@ -1,0 +1,4 @@
+---
+    #SLURM dependences
+    - name: Install Apt ssh package
+      apt: name=ssh
