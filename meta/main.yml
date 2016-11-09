@@ -14,4 +14,4 @@ galaxy_info:
     - trusty
   galaxy_tags:
     - ssh
-dependencies:
+dependencies: []
