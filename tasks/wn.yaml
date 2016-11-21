@@ -1,6 +1,6 @@
 ---
     - name: Create ssh keys for defined user
-      user: name={{ssh_user}} generate_ssh_key=yes
+      user: name={{ssh_user}} generate_ssh_key=yes shell=/bin/bash
 
     - name: Add the authorized_key to the user '{{ssh_user}}'
       authorized_key: user={{ssh_user}} key="{{ lookup('file', '/tmp/' + ssh_user + '_id_rsa.pub') }}"

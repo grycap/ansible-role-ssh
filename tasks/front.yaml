@@ -1,13 +1,13 @@
 ---
-    # Configure SSH without password to connect with the nodes of the cluster
-    - name: Create ssh keys for defined user
-      user: name={{ssh_user}} generate_ssh_key=yes
+  # Configure SSH without password to connect with the nodes of the cluster
+  - name: Create ssh keys for defined user
+    user: name={{ssh_user}} generate_ssh_key=yes shell=/bin/bash
 
-    - name: Copy generated public key
-      local_action: command cp /home/{{ssh_user}}/.ssh/id_rsa.pub /tmp/{{ssh_user}}_id_rsa.pub creates=/tmp/{{ssh_user}}_id_rsa.pub
+  - name: Copy generated public key
+    local_action: command cp /home/{{ssh_user}}/.ssh/id_rsa.pub /tmp/{{ssh_user}}_id_rsa.pub creates=/tmp/{{ssh_user}}_id_rsa.pub
 
-    - name: Add the authorized_key to the user {{ssh_user}}
-      authorized_key: user={{ssh_user}} key="{{ lookup('file', '/tmp/' + ssh_user + '_id_rsa.pub') }}"
+  - name: Add the authorized_key to the user {{ssh_user}}
+    authorized_key: user={{ssh_user}} key="{{ lookup('file', '/tmp/' + ssh_user + '_id_rsa.pub') }}"
 
-    - name: Update known hosts
-      template: src=utils/templates/ssh_known_hosts.conf dest=/etc/ssh/ssh_known_hosts
+  - name: Update known hosts
+    template: src=utils/templates/ssh_known_hosts.conf dest=/etc/ssh/ssh_known_hosts
