@@ -1,4 +1,3 @@
 ---
-  #SLURM dependences
   - name: Install Apt ssh package
-    apt: name=ssh
+    apt: name=ssh update_cache=yes
