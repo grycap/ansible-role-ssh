@@ -18,6 +18,9 @@ env:
   - distro: ubuntu1404
     init: /sbin/init
     run_opts: ""
+  - distro: ubuntu1606
+    init: /sbin/init
+    run_opts: ""
 
 before_install:
   # Pull container.
