@@ -1,6 +1,6 @@
 ---
 - name: Install Apt ssh package
-  apt: name=ssh
+  apt: name=ssh update_cache=yes
 
 - name: Set Debian facts
   set_fact:
