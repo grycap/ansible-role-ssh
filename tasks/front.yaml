@@ -1,7 +1,7 @@
 ---
   # Configure SSH without password to connect with the nodes of the cluster
   - name: Create ssh keys for defined user
-    user: name={{ssh_user}} generate_ssh_key=yes shell=/bin/bash
+    user: name={{ssh_user}} generate_ssh_key=yes shell=/bin/bash groups="{{USER_GROUP}}"
 
   - name: Copy generated public key
     local_action: command cp /home/{{ssh_user}}/.ssh/id_rsa.pub /tmp/{{ssh_user}}_id_rsa.pub creates=/tmp/{{ssh_user}}_id_rsa.pub

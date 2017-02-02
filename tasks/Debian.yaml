@@ -1,4 +1,7 @@
 ---
-  #SLURM dependences
-  - name: Install Apt ssh package
-    apt: name=ssh
+- name: Install Apt ssh package
+  apt: name=ssh
+
+- name: Set Debian facts
+  set_fact:
+    USER_GROUP: "sudo"
