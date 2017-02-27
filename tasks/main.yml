@@ -1,12 +1,12 @@
 ---
-- stat: path=/usr/sbin/sshd
-  register: ssh_installed
+#- stat: path=/usr/sbin/sshd
+#  register: ssh_installed
 
-- block:
+#- block:
   - name: Include "{{ansible_os_family}}" ssh recipe
     include: "{{ansible_os_family}}.yaml"
 
   - name: Include "{{ssh_type_of_node}}" ssh recipe
     include: "{{ssh_type_of_node}}.yaml"
 
-  when: not ssh_installed.stat.exists
+#  when: not ssh_installed.stat.exists
