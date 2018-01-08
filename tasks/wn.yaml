@@ -2,6 +2,10 @@
 - name: Create ssh keys for defined user
   user: name={{ssh_user}} generate_ssh_key=yes shell=/bin/bash groups="{{USER_GROUP}}"
 
+- name: Copy public key
+  fetch: src=/tmp/{{ssh_user}}_id_rsa.pub dest=/tmp/{{ssh_user}}_id_rsa.pub flat=yes
+  delegate_to: '{{ hostvars[groups["front"][0]]["IM_NODE_PRIVATE_IP"] }}'
+
 - name: Add the authorized_key to the user '{{ssh_user}}'
   authorized_key: user={{ssh_user}} key="{{ lookup('file', '/tmp/' + ssh_user + '_id_rsa.pub') }}"
 
