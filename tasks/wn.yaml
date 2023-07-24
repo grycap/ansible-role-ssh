@@ -2,6 +2,11 @@
 - name: Create ssh keys for defined user
   user: name={{ssh_user}} generate_ssh_key=yes shell=/bin/bash groups="{{USER_GROUP}}"
 
+- name: Wait for the user pub key
+  wait_for:
+    path: "/tmp/{{ ssh_user }}_id_rsa.pub"
+  delegate_to: localhost
+
 - name: Add the authorized_key to the user '{{ssh_user}}'
   authorized_key: user={{ssh_user}} key="{{ lookup('file', '/tmp/' + ssh_user + '_id_rsa.pub') }}"
 
