@@ -1,10 +1,10 @@
 ---
 - name: Install Yum ssh package
-  yum: name=openssh,libselinux-python
+  yum: name=openssh,openssh-clients,libselinux-python
   when: ansible_distribution_major_version|int < 8
 
 - name: Install Yum ssh package
-  yum: name=openssh,libselinux-python3
+  yum: name=openssh,openssh-clients,libselinux-python3
   when: ansible_distribution_major_version|int >= 8
 
 - name: Modify sudoers file (RedHat)
