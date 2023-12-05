@@ -30,6 +30,3 @@
     owner: "{{ssh_user}}"
     group: "{{ssh_user}}"
     mode: "0600"
-
-- name: Update known hosts
-  template: src=ssh_known_hosts.conf.j2 dest=/etc/ssh/ssh_known_hosts
