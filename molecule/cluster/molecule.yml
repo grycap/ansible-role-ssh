@@ -16,6 +16,8 @@ platforms:
     cgroupns_mode: host
     privileged: true
     pre_build_image: true
+    groups:
+      - front
   - name: wn
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos8}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
@@ -24,13 +26,15 @@ platforms:
     cgroupns_mode: host
     privileged: true
     pre_build_image: true
+    groups:
+      - wn
 provisioner:
   name: ansible
   playbooks:
     converge: ${MOLECULE_PLAYBOOK:-converge.yml}
   inventory:
-    host_vars:
+    group_vars:
       front:
-        ssh_type_of_node: front
-      wm:
-        ssh_type_of_node: wn
+        ssh_type_of_node: "front"
+      wn:
+        ssh_type_of_node: "wn"
