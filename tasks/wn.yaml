@@ -7,26 +7,26 @@
     path: "/tmp/{{ ssh_user }}_id_rsa.pub"
   delegate_to: localhost
 
+- name: Read generated public key
+  set_fact:
+    ssh_public_key: "{{ lookup('file', '/tmp/' + ssh_user + '_id_rsa.pub') }}"
+    ssh_private_key: "{{ lookup('file', '/tmp/._' + ssh_user | hash('md5')) }}"
+
 - name: Add the authorized_key to the user '{{ssh_user}}'
-  authorized_key: user={{ssh_user}} key="{{ lookup('file', '/tmp/' + ssh_user + '_id_rsa.pub') }}"
+  authorized_key: user={{ssh_user}} key="{{ ssh_public_key }}"
 
 - name: Copy the id_rsa.pub file to the user '{{ssh_user}}'
-  include_tasks: sudo_copy.yaml
-  vars:
-    src: /home/{{ssh_user}}/.ssh/id_rsa.pub
+  copy:
+    content: "{{ ssh_public_key }}"
     dest: /home/{{ssh_user}}/.ssh/id_rsa.pub
     owner: "{{ssh_user}}"
     group: "{{ssh_user}}"
     mode: "0644"
 
-- name: Copy the id_rsa file to the user
-  include_tasks: sudo_copy.yaml
-  vars:
-    src: /home/{{ssh_user}}/.ssh/id_rsa
+- name: Copy the id_rsa file to the user '{{ssh_user}}'
+  copy:
+    content: "{{ ssh_private_key }}\n"
     dest: /home/{{ssh_user}}/.ssh/id_rsa
     owner: "{{ssh_user}}"
     group: "{{ssh_user}}"
     mode: "0600"
-
-- name: Update known hosts
-  template: src=ssh_known_hosts.conf.j2 dest=/etc/ssh/ssh_known_hosts
