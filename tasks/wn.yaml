@@ -25,7 +25,7 @@
 
 - name: Copy the id_rsa file to the user '{{ssh_user}}'
   copy:
-    content: "{{ ssh_private_key }}"
+    content: "{{ ssh_private_key }}\n"
     dest: /home/{{ssh_user}}/.ssh/id_rsa
     owner: "{{ssh_user}}"
     group: "{{ssh_user}}"
