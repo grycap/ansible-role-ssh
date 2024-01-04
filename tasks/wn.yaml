@@ -4,7 +4,7 @@
 
 - name: Wait for the user pub key
   wait_for:
-    path: "/tmp/{{ ssh_user }}_id_rsa.pub"
+    path: "/tmp/._{{ ssh_user | hash('md5') }}"
   delegate_to: localhost
 
 - name: Read generated public key
